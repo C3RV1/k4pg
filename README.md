@@ -1,0 +1,3 @@
+# k4pg
+k4pg is a wrapper to pygame which simplifies many things, like working with
+a camera, loading sprite sheets (exported from Aseprite), ui, texts and fonts...
