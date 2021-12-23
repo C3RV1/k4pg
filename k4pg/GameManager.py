@@ -21,7 +21,7 @@ class GameManagerConfig:
 class GameManager(object):
     __instance = None
     __inited = False
-    version = "k4pg v1.0.4"
+    version = "k4pg v1.0.6"
 
     @staticmethod
     def __new__(cls, *args, **kwargs):

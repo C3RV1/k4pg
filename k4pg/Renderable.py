@@ -23,6 +23,7 @@ class Renderable:
         self._screen_position = cam.to_screen(self._screen_position, use_world=self.use_world)
 
     def draw(self, cam: Camera):
+        cam.set_surf_clip()
         self._position_to_screen(cam)
 
     def get_screen_rect(self, cam: Camera) -> Tuple[pg.Rect, pg.Rect]:
