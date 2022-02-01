@@ -54,7 +54,7 @@ class SpriteLoaderOS(SpriteLoader):
                         for frame in frames:
                             frame_durations.append(data["frames"][frame]["duration"] / 1000.0)
                     tag_info.append(Tag(tag["name"], frames, frame_durations))
-                SpriteLoaderOS.CACHE = [surf, frame_info, tag_info]
+                SpriteLoaderOS.CACHE[path] = [surf, frame_info, tag_info]
         if not do_copy:
             sprite.load_sprite(self, surf, frame_info, tag_info)
         else:
