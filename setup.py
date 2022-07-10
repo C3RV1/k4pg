@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="k4pg",
-    version="1.1.0",
+    version="1.1.2",
     author="KeyFr4me",
     description="Pygame utilities used by KeyFr4me",
     packages=find_packages(),
