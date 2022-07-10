@@ -27,6 +27,7 @@ class Camera:
         self.surf = surf
 
     def to_screen(self, point: pg.Vector2, use_world=True):
+        point = pg.Vector2(point)
         if use_world:
             point -= self.world_position
         point *= self.zoom.elementwise()
@@ -35,6 +36,7 @@ class Camera:
         return point
 
     def from_screen(self, point: pg.Vector2):
+        point = pg.Vector2(point)
         point -= pg.Vector2(self.viewport[2], self.viewport[3]) * self.alignment.elementwise()
         point -= pg.Vector2(self.viewport[0], self.viewport[1])
         point /= self.zoom.elementwise()

@@ -20,3 +20,4 @@ from .sprite.Text import Text
 from .sprite.Slider import Slider
 from .font.Font import Font, PygameFont, FontMap, CharMap
 from .font.FontLoader import FontLoader, FontLoaderOS, FontLoaderSYS
+import k4pg.draw as draw
