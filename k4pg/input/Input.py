@@ -101,8 +101,6 @@ class Input(object):
                 self._mouse_position_updated = True
             elif event.type == pygame.QUIT:
                 self.quit = True
-                from ..GameManager import GameManager
-                GameManager().exit()
             elif event.type == pygame.JOYAXISMOTION:
                 self._joystick_axes[event.joy][event.axis] = event.value
                 self._joystick_hat_or_axis[event.joy] = 0

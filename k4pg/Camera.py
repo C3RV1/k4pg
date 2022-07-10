@@ -58,3 +58,7 @@ class Camera:
     def set_surf_clip(self):
         if self.surf.get_clip() != self.viewport:
             self.surf.set_clip(self.viewport)
+
+    def clear(self, color: pg.Color):
+        self.set_surf_clip()
+        self.surf.fill(color, self.viewport)

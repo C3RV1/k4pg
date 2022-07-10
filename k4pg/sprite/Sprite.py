@@ -1,5 +1,6 @@
+import logging
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, TYPE_CHECKING, Tuple, Dict
 
 import pygame as pg
@@ -36,7 +37,9 @@ class Tag:
     name: str
     frames: List[int]
     frame_durations: List[float]
-    vars_: dict = field(default_factory=dict)
+    child_x: int = 0
+    child_y: int = 0
+    child_index: int = 0
 
 
 class Sprite(Renderable):
@@ -125,12 +128,32 @@ class Sprite(Renderable):
                     if len(tag.frames) > 0:
                         self.set_frame(tag.frames[0])
                 return
+        logging.warning(f"Sprite tag not found (tag: {name}, "
+                        f"tags: {[tag.name for tag in self._tag_info]})")
         return
 
     def set_tag_by_num(self, num: int):
         if num >= len(self._tag_info):
+            logging.warning(f"Sprite tag num bigger than number of animations (num: {num}, "
+                            f"count: {len(self._tag_info)})")
             return
         self.set_tag(self._tag_info[num].name)
+
+    @property
+    def tag_count(self):
+        return len(self._tag_info)
+
+    @property
+    def tag_names(self):
+        return [tag.name for tag in self._tag_info]
+
+    def get_tag(self):
+        return self._active_tag
+
+    def get_tag_num(self):
+        if self._active_tag not in self._tag_info:
+            return None
+        return self._tag_info.index(self._active_tag)
 
     def animate(self, dt: float):
         if not self._tag_info:

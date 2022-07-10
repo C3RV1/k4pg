@@ -1,5 +1,7 @@
 from ..sprite.Sprite import Sprite
 from ..ui.Button import Button
+import pygame as pg
+from ..sprite.SpriteLoader import SpriteLoader
 
 
 class ButtonSprite(Button, Sprite):
@@ -8,6 +10,10 @@ class ButtonSprite(Button, Sprite):
         self._hover_tag = hover_tag
         self._not_pressed_tag = not_pressed_tag
         super(ButtonSprite, self).__init__(*args, **kwargs)
+
+    def load_sprite(self, loader: 'SpriteLoader', surface: pg.Surface, frame_info, tag_info, vars_=None):
+        super(ButtonSprite, self).load_sprite(loader, surface, frame_info, tag_info, vars_=vars_)
+        self.set_tag(self.not_pressed_tag)
 
     def get_hover(self, cam):
         mouse_pos = self.inp.get_mouse_pos()
