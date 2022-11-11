@@ -43,6 +43,7 @@ class Input(object):
             self._key_down = {}
             self._key_updated = []
             self._key_grab_id = None
+            self._should_release_key = False
 
             self._mouse_down = {}
             self._mouse_updated = []
@@ -50,7 +51,9 @@ class Input(object):
             self._mouse_position_updated = False
             self._mouse_position_pre_grab = [0, 0]
             self._mouse_motion = [0, 0]
+            self._mouse_scroll = [0, 0]
             self._mouse_grab_id = None
+            self._should_release_mouse = False
 
             self._joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
             for joystick in self._joysticks:
@@ -69,13 +72,18 @@ class Input(object):
         return len(self._joysticks)
 
     def update_events(self, events: list) -> None:
-        self._key_grab_id = None
-        self._mouse_grab_id = None
+        if self._should_release_key:
+            self._key_grab_id = None
+            self._should_release_key = False
+        if self._should_release_mouse:
+            self._mouse_grab_id = None
+            self._should_release_mouse = False
         self._mouse_position_updated = False
         self.last_events = events
         self._key_updated = []
         self._mouse_updated = []
         self._mouse_motion = [0, 0]
+        self._mouse_scroll = [0, 0]
         self._joystick_buttons_updated = [[] for _ in range(len(self._joysticks))]
         self.quit = False
         for event in events:
@@ -165,6 +173,11 @@ class Input(object):
             return 0, 0
         return tuple(self._mouse_motion)
 
+    def get_mouse_scroll(self, grab_id=None) -> tuple:
+        if self._mouse_grab_id is not None and self._mouse_grab_id != grab_id:
+            return 0, 0
+        return tuple(self._mouse_scroll)
+
     def get_joystick_button_down(self, joy_id: int, button: int):
         if button not in self._joystick_buttons_updated[joy_id]:
             return False
@@ -201,7 +214,7 @@ class Input(object):
             self._key_grab_id = grab_id
 
     def release_keyboard(self):
-        self._key_grab_id = None
+        self._should_release_key = True
 
     def grab_mouse(self, grab_id) -> None:
         if self._mouse_grab_id is None:
@@ -209,4 +222,4 @@ class Input(object):
             self._mouse_grab_id = grab_id
 
     def release_mouse(self):
-        self._mouse_grab_id = None
+        self._should_release_mouse = True
