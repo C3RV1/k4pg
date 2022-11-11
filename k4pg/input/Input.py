@@ -122,6 +122,8 @@ class Input(object):
             elif event.type == pygame.JOYBUTTONUP:
                 self._joystick_buttons_down[event.joy][event.button] = False
                 self._joystick_buttons_updated[event.joy].append(event.button)
+            elif event.type == pygame.MOUSEWHEEL:
+                self._mouse_scroll = [event.x, event.y]
             elif event.type == pygame.JOYDEVICEADDED:
                 print("DEVICE ADDED", event)
 
