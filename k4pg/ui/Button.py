@@ -10,7 +10,6 @@ class Button:
         self._hovering = False
         self.pressed_counter = pressed_counter
         self._current_pressed_counter = 0
-        self.on_not_pressed()
 
     def on_not_pressed(self):
         pass
@@ -35,19 +34,16 @@ class Button:
                     self._pressed = True
                     self.on_pressed()
                     self._current_pressed_counter = self.pressed_counter
-                    return False
                 else:
                     self.on_hover()
                     self._hovering = True
             else:
                 self.on_not_pressed()
         else:
-            if self._current_pressed_counter is None:
-                self._pressed = False
-                return True
             if self._current_pressed_counter <= 0:
                 self.on_not_pressed()
-                self._current_pressed_counter = None
-                return False
+                self._current_pressed_counter = 0
+                self._pressed = False
+                return True
             self._current_pressed_counter -= dt
         return False
