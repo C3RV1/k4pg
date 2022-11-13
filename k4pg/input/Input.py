@@ -54,6 +54,7 @@ class Input(object):
             self._mouse_scroll = [0, 0]
             self._mouse_grab_id = None
             self._should_release_mouse = False
+            self._last_mouse_pos = [0, 0]
 
             self._joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
             for joystick in self._joysticks:
@@ -105,7 +106,8 @@ class Input(object):
                 self._mouse_updated.append(button)
             elif event.type == pygame.MOUSEMOTION:
                 self._mouse_position = event.pos
-                self._mouse_motion = event.rel
+                self._mouse_motion[0] = self._mouse_position[0] - self._last_mouse_pos[0]
+                self._mouse_motion[1] = self._mouse_position[1] - self._last_mouse_pos[1]
                 self._mouse_position_updated = True
             elif event.type == pygame.QUIT:
                 self.quit = True
@@ -126,6 +128,7 @@ class Input(object):
                 self._mouse_scroll = [event.x, event.y]
             elif event.type == pygame.JOYDEVICEADDED:
                 print("DEVICE ADDED", event)
+        self._last_mouse_pos = self._mouse_position
 
     def get_key_down(self, key: int, grab_id=None) -> bool:
         if self._key_grab_id is not None and self._key_grab_id != grab_id:
@@ -215,6 +218,11 @@ class Input(object):
         if self._key_grab_id is None:
             self._key_grab_id = grab_id
 
+    def grabbed_keyboard(self, grab_id) -> bool:
+        if self._mouse_grab_id == grab_id:
+            return True
+        return False
+
     def release_keyboard(self):
         self._should_release_key = True
 
@@ -222,6 +230,11 @@ class Input(object):
         if self._mouse_grab_id is None:
             self._mouse_position_pre_grab = self._mouse_position
             self._mouse_grab_id = grab_id
+
+    def grabbed_mouse(self, grab_id) -> bool:
+        if self._mouse_grab_id == grab_id:
+            return True
+        return False
 
     def release_mouse(self):
         self._should_release_mouse = True

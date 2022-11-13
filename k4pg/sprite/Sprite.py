@@ -1,6 +1,6 @@
 import logging
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, TYPE_CHECKING, Tuple, Dict
 
 import pygame as pg
@@ -37,6 +37,7 @@ class Tag:
     name: str
     frames: List[int]
     frame_durations: List[float]
+    draw_off: List[pg.Vector2] = field(default_factory=list)
     child_x: int = 0
     child_y: int = 0
     child_index: int = 0
@@ -359,10 +360,23 @@ class Sprite(Renderable):
         for transformed_surf in self.transformed_surf.values():
             transformed_surf.set_alpha(int(self._alpha))
 
+    def get_draw_off(self) -> pg.Vector2:
+        if self._active_tag and self._tag_frame < len(self._active_tag.draw_off):
+            self._active_tag: Tag
+            return self._active_tag.draw_off[self._tag_frame]
+        return pg.Vector2(0, 0)
+
     def get_world_rect(self) -> pg.Rect:
-        return pg.Rect(self.position.x - self._real_size[0] * self.center.x,
-                       self.position.y - self._real_size[1] * self.center.y,
+        draw_off = self.get_draw_off()
+        return pg.Rect(self.position.x - self._real_size[0] * self.center.x + draw_off.x,
+                       self.position.y - self._real_size[1] * self.center.y + draw_off.y,
                        self._real_size[0], self._real_size[1])
+
+    def _position_to_screen(self, cam: Camera):
+        draw_off = self.get_draw_off()
+        self.position += draw_off
+        super(Sprite, self)._position_to_screen(cam)
+        self.position -= draw_off
 
     def get_screen_rect(self, cam: Camera, update_pos=True, do_clip=True) -> Tuple[pg.Rect, pg.Rect]:
         self._position_to_screen(cam)
