@@ -6,7 +6,7 @@ import pygame as pg
 
 
 class Renderable:
-    def __init__(self, *args, position: pg.Vector2 = None, use_world: bool = True, center=None, **kwargs):
+    def __init__(self, *args, position: pg.Vector2 = None, use_world: bool = True, center=None, visible=True, **kwargs):
         super(Renderable, self).__init__(*args, **kwargs)
         self.position = pg.Vector2(0, 0)
         if position is not None:
@@ -16,7 +16,7 @@ class Renderable:
         self.center = pg.Vector2(Alignment.CENTER, Alignment.CENTER)
         if center is not None:
             self.center.update(center.x, center.y)
-        self.visible = True
+        self.visible = visible
 
     def _position_to_screen(self, cam: Camera):
         self._screen_position.update(self.position.x, self.position.y)

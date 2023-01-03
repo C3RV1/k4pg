@@ -327,9 +327,8 @@ class Sprite(Renderable):
         transformed_surf = surf
         self._transform_needed[id(cam)] = False
 
-        if not transformed_surf.get_flags() & pg.SRCALPHA:
-            if self._color_key:
-                transformed_surf.set_colorkey(self._color_key)
+        if self._color_key:
+            transformed_surf.set_colorkey(self._color_key)
         if self._alpha is not None:
             transformed_surf.set_alpha(int(self._alpha))
 
@@ -345,8 +344,7 @@ class Sprite(Renderable):
             return
         self._color_key = v
         for transformed_surf in self.transformed_surf.values():
-            if transformed_surf.get_flags() & pg.SRCALPHA:
-                transformed_surf.set_colorkey(self._color_key)
+            transformed_surf.set_colorkey(self._color_key)
 
     @property
     def alpha(self):

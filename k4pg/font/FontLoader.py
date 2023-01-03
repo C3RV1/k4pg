@@ -18,11 +18,14 @@ class FontLoader:
 class FontLoaderSYS(FontLoader):
     def __init__(self, fall_back_font_sys=None):
         self.fall_back_font_sys = fall_back_font_sys
+        self.font_list = {}
 
     def _load(self, path: str, size: int, text: Text) -> bool:
         if path not in pg.font.get_fonts():
             return False
-        text.font = PygameFont(pg.font.SysFont(path, size))
+        if (path, size) not in self.font_list:
+            self.font_list[(path, size)] = PygameFont(pg.font.SysFont(path, size))
+        text.font = self.font_list[(path, size)]
         return True
 
     def load(self, path: str, size: int, text: Text):

@@ -16,13 +16,15 @@ class ButtonSprite(Button, Sprite):
         self.set_tag(self.not_pressed_tag)
 
     def get_hover(self, cam):
+        if not self.visible:
+            return False
         mouse_pos = self.inp.get_mouse_pos()
         if self.get_screen_rect(cam)[0].collidepoint(mouse_pos[0], mouse_pos[1]):
             return True
         return False
 
     def get_press(self):
-        if self.inp.get_mouse_down(1):
+        if self.inp.get_mouse_up(1):
             return True
         return False
 
