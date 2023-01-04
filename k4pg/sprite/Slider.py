@@ -1,5 +1,4 @@
 from .Sprite import Sprite
-from ..input.Input import Input
 from ..Camera import Camera
 from ..Alignment import Alignment
 

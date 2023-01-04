@@ -1,10 +1,11 @@
 from typing import Tuple
-
-from k4pg import Sprite, Camera, Alignment
 import pygame as pg
 
-from k4pg.font.Font import Font
-from k4pg.font.FontSupportive import FontSupportive
+from ..font.Font import Font
+from ..font.FontSupportive import FontSupportive
+from ..sprite.Sprite import Sprite
+from ..Camera import Camera
+from ..Alignment import Alignment
 
 
 class Text(Sprite, FontSupportive):

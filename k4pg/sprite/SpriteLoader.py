@@ -1,6 +1,6 @@
 import os
 import pygame as pg
-from k4pg.sprite.Sprite import Sprite, Tag, Frame
+from .Sprite import Sprite, Tag, Frame
 import json
 
 

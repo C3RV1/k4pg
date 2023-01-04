@@ -1,9 +1,9 @@
 from typing import Tuple
 
-from k4pg.Alignment import Alignment
-from k4pg.Camera import Camera
-from k4pg.input.Input import Input
-from k4pg.GameManager import GameManager
+from .Alignment import Alignment
+from .Camera import Camera
+from .input.Input import Input
+from .GameManager import GameManager
 import pygame as pg
 
 

@@ -1,7 +1,7 @@
 import pygame as pg
 
-from k4pg.Alignment import Alignment
-from k4pg.Screen import Screen
+from .Alignment import Alignment
+from .Screen import Screen
 
 
 class Camera:
