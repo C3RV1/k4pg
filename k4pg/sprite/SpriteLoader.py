@@ -5,7 +5,7 @@ import json
 
 
 class SpriteLoader:
-    def load(self, path: str, sprite: Sprite, sprite_sheet=False, convert_alpha=True, do_copy=False):
+    def load(self, path: str, sprite: Sprite, sprite_sheet, convert_alpha=True, do_copy=False):
         pass
 
 
@@ -15,7 +15,7 @@ class SpriteLoaderOS(SpriteLoader):
     def __init__(self, base_path_os=None):
         self.base_path = base_path_os
 
-    def load(self, path: str, sprite: Sprite, sprite_sheet=False, convert_alpha=True, do_copy=False):
+    def load(self, path: str, sprite: Sprite, sprite_sheet, convert_alpha=True, do_copy=False):
         if self.base_path:
             path = os.path.join(self.base_path, path)
         if path in SpriteLoaderOS.CACHE:
