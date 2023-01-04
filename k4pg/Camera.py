@@ -67,7 +67,8 @@ class Camera:
     def _zoom_from_expected(self, actual: tuple, expected: tuple):
         actual = pg.Vector2(actual)
         expected = pg.Vector2(expected)
-        self.zoom = actual / expected.elementwise()
+        zoom = min(actual.x / expected.x, actual.y / expected.y)
+        self.zoom = pg.Vector2(zoom, zoom)
 
     def zoom_from_expected_viewport(self, expected_viewport: tuple):
         self._zoom_from_expected(self.viewport.size, expected_viewport)

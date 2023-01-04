@@ -31,7 +31,7 @@ class Slider(Sprite):
         if self.interacting:
             if self.inp.get_mouse_up(1, id(self)):
                 self.interacting = False
-                self.inp.release_mouse()
+                self.inp.release_mouse(id(self))
             else:
                 screen_pos = self.inp.get_mouse_pos(id(self))
                 self.percentage = (screen_pos[0] - screen_rect.x) / screen_rect.w
