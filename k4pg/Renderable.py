@@ -2,6 +2,8 @@ from typing import Tuple
 
 from k4pg.Alignment import Alignment
 from k4pg.Camera import Camera
+from k4pg.input.Input import Input
+from k4pg.GameManager import GameManager
 import pygame as pg
 
 
@@ -17,6 +19,8 @@ class Renderable:
         if center is not None:
             self.center.update(center.x, center.y)
         self.visible = visible
+        self.inp = Input()
+        self.gm = GameManager()
 
     def _position_to_screen(self, cam: Camera):
         self._screen_position.update(self.position.x, self.position.y)

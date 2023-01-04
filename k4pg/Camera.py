@@ -1,6 +1,7 @@
 import pygame as pg
 
-from k4pg import Alignment
+from k4pg.Alignment import Alignment
+from k4pg.Screen import Screen
 
 
 class Camera:
@@ -62,3 +63,14 @@ class Camera:
     def clear(self, color: pg.Color):
         self.set_surf_clip()
         self.surf.fill(color, self.viewport)
+
+    def _zoom_from_expected(self, actual: tuple, expected: tuple):
+        actual = pg.Vector2(actual)
+        expected = pg.Vector2(expected)
+        self.zoom = actual / expected.elementwise()
+
+    def zoom_from_expected_viewport(self, expected_viewport: tuple):
+        self._zoom_from_expected(self.viewport.size, expected_viewport)
+
+    def zoom_from_expected_screen(self, expected_screen: tuple):
+        self._zoom_from_expected(Screen.screen_size(), expected_screen)

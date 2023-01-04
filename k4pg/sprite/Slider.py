@@ -8,7 +8,6 @@ class Slider(Sprite):
     def __init__(self, *args, min_value=0, max_value=100, start_value=0, **kwargs):
         super(Slider, self).__init__(*args, **kwargs)
         self.child = Sprite()
-        self.inp = Input()
         self.range = [min_value, max_value - min_value]
         self.percentage = (start_value - min_value) / self.range[1]
         self.interacting = False

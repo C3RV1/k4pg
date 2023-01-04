@@ -5,7 +5,6 @@ from ..Camera import Camera
 class Button:
     def __init__(self, *args, pressed_counter=0.1, **kwargs):
         super(Button, self).__init__(*args, **kwargs)
-        self.inp = Input()
         self._pressed = False
         self._hovering = False
         self.pressed_counter = pressed_counter

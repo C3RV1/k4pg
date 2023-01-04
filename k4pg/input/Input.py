@@ -219,12 +219,13 @@ class Input(object):
             self._key_grab_id = grab_id
 
     def grabbed_keyboard(self, grab_id) -> bool:
-        if self._mouse_grab_id == grab_id:
+        if self._key_grab_id == grab_id:
             return True
         return False
 
-    def release_keyboard(self):
-        self._should_release_key = True
+    def release_keyboard(self, grab_id) -> None:
+        if self._key_grab_id == grab_id:
+            self._should_release_key = True
 
     def grab_mouse(self, grab_id) -> None:
         if self._mouse_grab_id is None:
@@ -236,5 +237,9 @@ class Input(object):
             return True
         return False
 
-    def release_mouse(self):
-        self._should_release_mouse = True
+    def release_mouse(self, grab_id, immediate=False) -> None:
+        if self._mouse_grab_id == grab_id:
+            if immediate:
+                self._mouse_grab_id = None
+            else:
+                self._should_release_mouse = True
