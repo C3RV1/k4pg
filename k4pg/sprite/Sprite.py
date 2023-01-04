@@ -141,17 +141,17 @@ class Sprite(Renderable):
         self.set_tag(self._tag_info[num].name)
 
     @property
-    def tag_count(self):
+    def tag_count(self) -> int:
         return len(self._tag_info)
 
     @property
-    def tag_names(self):
+    def tag_names(self) -> List[str]:
         return [tag.name for tag in self._tag_info]
 
-    def get_tag(self):
+    def get_tag(self) -> Tag:
         return self._active_tag
 
-    def get_tag_num(self):
+    def get_tag_num(self) -> int:
         if self._active_tag not in self._tag_info:
             return None
         return self._tag_info.index(self._active_tag)

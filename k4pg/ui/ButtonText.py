@@ -1,8 +1,9 @@
-import k4pg
+from ..ui.Button import Button
+from ..sprite.Text import Text
 import pygame as pg
 
 
-class ButtonText(k4pg.Button, k4pg.Text):
+class ButtonText(Button, Text):
     def __init__(self, *args, pressed_color: pg.Color = None,
                  hover_color: pg.Color = None, not_pressed_color: pg.Color = None, **kwargs):
         self._pressed_color = pressed_color
