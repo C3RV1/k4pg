@@ -36,12 +36,13 @@ class Camera:
         point += pg.Vector2(self.viewport[2], self.viewport[3]) * self.alignment.elementwise()
         return point
 
-    def from_screen(self, point: pg.Vector2):
+    def from_screen(self, point: pg.Vector2, use_world=True):
         point = pg.Vector2(point)
         point -= pg.Vector2(self.viewport[2], self.viewport[3]) * self.alignment.elementwise()
         point -= pg.Vector2(self.viewport[0], self.viewport[1])
         point /= self.zoom.elementwise()
-        point += self.world_position
+        if use_world:
+            point += self.world_position
         return point
 
     def clip_rect(self, r):

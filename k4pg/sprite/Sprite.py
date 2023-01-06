@@ -134,6 +134,8 @@ class Sprite(Renderable):
         return
 
     def set_tag_by_num(self, num: int):
+        if num < 0:
+            num = len(self._tag_info) + num
         if num >= len(self._tag_info):
             logging.warning(f"Sprite tag num bigger than number of animations (num: {num}, "
                             f"count: {len(self._tag_info)})")
@@ -242,6 +244,8 @@ class Sprite(Renderable):
         if v == self._surf:
             return
         self._surf = v
+        if self._surf is None:
+            return
         self._size = self._surf.get_size()
         self.predict_real_size()
         # update cropped if sprite_sheet
@@ -390,6 +394,8 @@ class Sprite(Renderable):
             clip = r.copy()
             clip[0] = 0
             clip[1] = 0
+        r[0] = math.ceil(r[0])
+        r[1] = math.ceil(r[1])
         return pg.Rect(r), pg.Rect(clip)
 
     def draw(self, cam: Camera):

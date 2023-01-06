@@ -4,13 +4,12 @@ import pygame as pg
 
 
 class ButtonText(Button, Text):
-    def __init__(self, *args, pressed_color: pg.Color = None,
-                 hover_color: pg.Color = None, not_pressed_color: pg.Color = None, **kwargs):
+    def __init__(self, *args, hover_color=pg.Color(255, 255, 0),
+                 pressed_color=pg.Color(0, 255, 0), **kwargs):
         self._pressed_color = pressed_color
         self._hover_color = hover_color
-        self._not_pressed_color = not_pressed_color
         super(ButtonText, self).__init__(*args, **kwargs)
-        self.color = self._not_pressed_color
+        self._not_pressed_color = self.color
 
     def get_hover(self, cam):
         if not self.visible:
@@ -22,10 +21,12 @@ class ButtonText(Button, Text):
 
     def get_press(self):
         if self.inp.get_mouse_up(1):
+            self.inp.grab_mouse(id(self))
             return True
         return False
 
     def on_not_pressed(self):
+        self.inp.release_mouse(id(self))
         if self._not_pressed_color:
             self.color = self._not_pressed_color
 

@@ -56,6 +56,8 @@ class Input(object):
             self._should_release_mouse = False
             self._last_mouse_pos = [0, 0]
 
+            self._dropped_files = []
+
             self._joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
             for joystick in self._joysticks:
                 joystick.init()
@@ -85,6 +87,7 @@ class Input(object):
         self._mouse_updated = []
         self._mouse_motion = [0, 0]
         self._mouse_scroll = [0, 0]
+        self._dropped_files = []
         self._joystick_buttons_updated = [[] for _ in range(len(self._joysticks))]
         self.quit = False
         for event in events:
@@ -128,6 +131,8 @@ class Input(object):
                 self._mouse_scroll = [event.x, event.y]
             elif event.type == pygame.JOYDEVICEADDED:
                 print("DEVICE ADDED", event)
+            elif event.type == pygame.DROPFILE:
+                self._dropped_files.append(event.file)
         self._last_mouse_pos = self._mouse_position
 
     def get_key_down(self, key: int, grab_id=None) -> bool:
@@ -243,3 +248,8 @@ class Input(object):
                 self._mouse_grab_id = None
             else:
                 self._should_release_mouse = True
+
+    def get_dropped_file(self, grab_id):
+        if self._mouse_grab_id == grab_id:
+            return self._dropped_files
+        return []

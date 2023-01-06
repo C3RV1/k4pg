@@ -30,11 +30,8 @@ class Renderable:
         cam.set_surf_clip()
         self._position_to_screen(cam)
 
-    def get_screen_rect(self, cam: Camera) -> Tuple[pg.Rect, pg.Rect]:
-        pass
+    def get_screen_rect(self, cam: Camera, do_clip=True) -> Tuple[pg.Rect, pg.Rect]:
+        return pg.Rect(0, 0, 0, 0), pg.Rect(0, 0, 0, 0)
 
     def get_world_rect(self) -> pg.Rect:
-        pass
-
-    def unload(self):
-        pass
+        return pg.Rect(0, 0, 0, 0)
